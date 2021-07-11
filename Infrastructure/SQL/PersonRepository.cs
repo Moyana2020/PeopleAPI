@@ -1,5 +1,5 @@
 ﻿using Abstractions;
-using Abstractions.Models;
+using Abstractions.Entities;
 using Abstractions.Repositories;
 using Microsoft.Extensions.Options;
 using System;
@@ -24,27 +24,26 @@ namespace Infrastructure.SQL
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Person>> GetAll()
+        public async Task<IEnumerable<PersonEntity>> GetAll()
         {
-            var people = _context.People.Select(s => s);
+            var people = _context.People.Where(s => !s.IsDeleted).Select(s => s);
             return people;
         }
 
-        public async Task<Person> GetOne(int id)
+        public async Task<PersonEntity> GetOne(int id)
         {
-            var person = _context.People.Where(s=>s.Id == id).Select(s => s).FirstOrDefault();
+            var person = _context.People.Where(s=>s.Id == id && !s.IsDeleted).Select(s => s).FirstOrDefault();
             return person;
         }
 
-        public async Task<int> Save(Person entity)
+        public async Task<int> Save(PersonEntity entity)
         {
             if(entity.Id != 0)
             {
                 var person = await GetOne(entity.Id);
                 if(person != null)
                 {
-                    _context.People.Remove(person);
-                    _context.People.Add(entity);
+                    _context.People.Update(entity);
                 }
             }
             else

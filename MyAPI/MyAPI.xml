@@ -17,14 +17,14 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:MyAPI.Controllers.PeopleController.Post(Abstractions.Models.Person)">
+        <member name="M:MyAPI.Controllers.PeopleController.Post(Abstractions.DTOs.Person)">
             <summary>
             add a person
             </summary>
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="M:MyAPI.Controllers.PeopleController.Put(Abstractions.Models.Person)">
+        <member name="M:MyAPI.Controllers.PeopleController.Put(Abstractions.DTOs.Person)">
             <summary>
             update a person's details
             </summary>

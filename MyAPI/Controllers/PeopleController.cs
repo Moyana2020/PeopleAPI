@@ -1,5 +1,6 @@
-﻿using Abstractions.Models;
+﻿using Abstractions.DTOs;
 using Abstractions.Repositories;
+using Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,11 +14,11 @@ namespace MyAPI.Controllers
     public class PeopleController : ControllerBase
     {
 
-        IPersonRepository _repository;
+        private readonly IPeopleService _peopleService;
 
-        public PeopleController(IPersonRepository repository)
+        public PeopleController(IPeopleService peopleService)
         {
-            _repository = repository;
+            _peopleService = peopleService;
         }
 
 
@@ -29,7 +30,8 @@ namespace MyAPI.Controllers
         [HttpGet]
         public async Task<IEnumerable<Person>> Get()
         {
-            return await _repository.GetAll();
+            var result = await _peopleService.GetPeople();
+            return result;
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace MyAPI.Controllers
         [HttpGet("{id}")]
         public async Task<Person> Get(int id)
         {
-            return await _repository.GetOne(id);
+            return await _peopleService.GetPerson(id);
         }
 
         /// <summary>
@@ -49,9 +51,17 @@ namespace MyAPI.Controllers
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task Post([FromBody] Person value)
+        public async Task<IActionResult> Post([FromBody] Person value)
         {
-            await _repository.Save(value);
+            var result = await _peopleService.AddPerson(value);
+            if(result.Count < 1)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
 
         /// <summary>
@@ -61,13 +71,16 @@ namespace MyAPI.Controllers
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task Put([FromBody] Person value)
+        public async Task<IActionResult> Put([FromBody] Person value)
         {
-            var person = await _repository.GetOne(value.Id);
-            if (person != null)
+            var result = await _peopleService.UpdatePerson(value);
+            if (result.Count < 1)
             {
-                person = value;
-                await _repository.Save(person);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result);
             }
 
         }
@@ -77,13 +90,16 @@ namespace MyAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var person = await _repository.GetOne(id);
-            if (person != null)
+            var result = await _peopleService.DeletePerson(id);
+            if (result.Count < 1)
             {
-                person.IsDeleted = true;
-                await _repository.Save(person);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result);
             }
         }
     }

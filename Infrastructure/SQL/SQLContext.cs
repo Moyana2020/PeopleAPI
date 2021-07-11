@@ -1,6 +1,6 @@
 ﻿
 using Abstractions;
-using Abstractions.Models;
+using Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -26,6 +26,6 @@ namespace Infrastructure.SQL
             optionsBuilder.UseSqlServer(_config.Value.SqlServerName);
         }
 
-        public DbSet<Person> People { get; set; }
+        public DbSet<PersonEntity> People { get; set; }
     }
 }

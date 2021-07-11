@@ -1,5 +1,5 @@
 ﻿using Abstractions;
-using Abstractions.Models;
+using Abstractions.Entities;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
@@ -40,7 +40,7 @@ namespace Infrastructure.Mongo
             Database = client.GetDatabase(_databaseName);
         }
 
-        public IMongoCollection<Person> People => Database.GetCollection<Person>("People");
+        public IMongoCollection<PersonEntity> People => Database.GetCollection<PersonEntity>("People");
 
     }
 }

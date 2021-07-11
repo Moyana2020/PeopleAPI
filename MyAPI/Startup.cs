@@ -1,5 +1,7 @@
 using Abstractions;
 using Abstractions.Repositories;
+using Abstractions.Services;
+using Core.Services;
 using Infrastructure;
 using Infrastructure.SQL;
 using Microsoft.AspNetCore.Builder;
@@ -61,6 +63,7 @@ namespace MyAPI
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IPeopleService, PeopleService>();
             services.AddApplicationInsightsTelemetry();
 
         }
