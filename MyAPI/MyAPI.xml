@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyAPI</name>
+    </assembly>
+    <members>
+        <member name="M:MyAPI.Controllers.PeopleController.Get">
+            <summary>
+            get all people
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyAPI.Controllers.PeopleController.Get(System.Int32)">
+            <summary>
+            get a person
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyAPI.Controllers.PeopleController.Post(Abstractions.Models.Person)">
+            <summary>
+            add a person
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyAPI.Controllers.PeopleController.Put(Abstractions.Models.Person)">
+            <summary>
+            update a person's details
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyAPI.Controllers.PeopleController.Delete(System.Int32)">
+            <summary>
+            remove person
+            </summary>
+            <param name="id"></param>
+        </member>
+    </members>
+</doc>
